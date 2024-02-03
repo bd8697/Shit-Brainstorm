@@ -1,0 +1,16 @@
+﻿@inherits LayoutComponentBase
+
+<div class="sidebar @Utility.StartColor @Utility.EndColor" style = "background-image: linear-gradient(180deg, @Utility.StartColor 0%, @Utility.EndColor 70%);" >
+    <NavMenu />
+</div>
+
+<div class="main @Utility.StartColor @Utility.EndColor">
+    <div class="content px-4">
+        @Body
+    </div>
+</div>
+
+<div class="sidebar @Utility.StartColor @Utility.EndColor" style = "background-image: linear-gradient(180deg, @Utility.StartColor 0%, @Utility.EndColor 70%);">
+    <NavMenu />
+    
+</div>

@@ -1,0 +1,13 @@
+﻿
+<MatSlider Style = "color: #4C3823 !important" @bind-Value="@MyBind" Discrete="true" Pin="true" TValue="int" ValueMin="@Min" ValueMax="@Max"></MatSlider>
+
+@code {
+    [Parameter]
+    public int MyBind { get; set; }
+
+    [Parameter]
+    public int Min { get; set; }
+
+    [Parameter]
+    public int Max { get; set; }
+}

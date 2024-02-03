@@ -1,0 +1,136 @@
+﻿@page "/pieChart"
+@inject NavigationManager UriHelper
+@inject IMatToaster Toaster
+@inject IJSRuntime JSRuntime
+
+
+<html @onkeyup="@KeyUp" tabindex="0" @ref="globalKeyHandler">
+
+<MatThemeProvider Theme="@greenTheme">
+    <div style ="text-align: center">
+        <h1 id ="myTitle">@TermName</h1> 
+    </div>
+
+    <Chart Config="_config"></Chart>
+
+    <div style = "text-align: center">
+        <MatSlider Style = "color: var(--myBrown) !important" @bind-Value="@BranchesPerChartSlider" Discrete="true" Pin="true" TValue="int" ValueMin="1" ValueMax="24"></MatSlider>
+    </div>
+</MatThemeProvider>
+
+@for (int i = 0; i < @branches.Count; i++)
+{
+    var temp = i;
+    string csstom = "background-color: " + @branchColors[temp + 1];
+    string btnId = "#" + branches[temp].Name;
+    if(Char.IsDigit(branches[temp].Name[0])) { //can't select IDs that start with digit for some reason
+        btnId = btnId.Insert(1, "id");
+    }
+
+
+            <div class = "buttonContainer" hidden="@hideButtons[temp]">
+                <Animate Animation="Animations.FadeUp" Anchor="@btnId" AnchorPlacement="@btnAnchors[temp]" Duration="TimeSpan.FromSeconds(0.5)" @ref="fadeUpAnims[temp]" IsManual="true" Easing="Easings.EaseInOutBack" Once="false" Mirror="true">
+                    <MatButton Raised="true" Class="MatButtonGlobal upvoteBtn" OnClick="@(e => OnUpvote(temp))">
+                        <i class="fa fa-level-up fa-flip-horizontal btnIco" aria-hidden="true"></i>
+                    </MatButton>
+                    <MatButton Raised="true" Class="MatButtonGlobal downvoteBtn" OnClick="@(e => OnDownvote(temp))">
+                        <i class="fa fa-level-down btnIco" aria-hidden="true"></i>
+                    </MatButton>
+                </Animate>
+                <MatButton Raised="true" id = "@btnId.Substring(1)" Style = "@csstom" Class="MatButtonGlobal branchBtn" OnClick="@(e => TriggerFade(temp))">@branches[temp].Name</MatButton>
+                <Animate Animation="Animations.FadeDown" Anchor="@btnId" AnchorPlacement="@btnAnchors[temp]" Duration="TimeSpan.FromSeconds(0.5)" @ref="fadeDownAnims[temp]" IsManual="true" Easing="Easings.EaseInOutBack" Once="false" Mirror="true">
+                    <MatButton Raised="true" Class="MatButtonGlobal reportBtn" OnClick="@(e => OnReport(temp))">
+                        <i  class="fa fa-ban btnIco" aria-hidden="true"></i>
+                    </MatButton>
+                </Animate>
+                <Animate Animation="Animations.FadeDown" Anchor="@btnId" AnchorPlacement="@btnAnchors[temp]" Duration="TimeSpan.FromSeconds(0.5)" @ref="fadeDownTriggers[temp]" IsManual="true" Once="true" Mirror="false">
+                    <div id ="triggerDown" ></div>
+                </Animate>
+                <Animate Animation="Animations.FadeUp" Anchor="@btnId" AnchorPlacement="@btnAnchors[temp]" Duration="TimeSpan.FromSeconds(0.5)" @ref="fadeUpTriggers[temp]" IsManual="true" Once="true" Mirror="false">
+                     <div id ="triggerUp" ></div>
+                </Animate>
+            </div>
+}
+    <br />
+    <MatThemeProvider Theme="@greenTheme">
+    <div style = "text-align: center">
+        <MatTextField  @bind-Value="@BranchToAdd" @onblur="@ResetClassOnBlur" InputClass = "inputText" Class = "@SearchTextClass" Dense="true" Label="Add a suggestion" Icon="" IconTrailing="true" Outlined="true" OnKeyUp="@SearchKeyUp"></MatTextField>
+        <div style = "display: inline-block">
+        <MatButton Raised="true" id ="addBranchBtn" Class="MatButtonGlobal" Style = "margin: 10%;" OnClick="@(e => AddBranchToTerm())">
+            <i  class="fa fa-plus btnIco" aria-hidden="true"></i>
+        </MatButton>
+        </div>
+    </div>
+    <br />
+    <div style = "text-align: center; margin-right: 5%;">
+        <MatButton Raised="true" Class="MatButtonGlobal myBtn" OnClick="@SearchNewTerm">
+            <i  class="fa fa-search btnIco" aria-hidden="true"></i>
+        </MatButton>
+        <MatButton Raised="true" Class="MatButtonGlobal myBtn" OnClick="@GoToTop">
+            <i  class="fa fa-undo btnIco" aria-hidden="true"></i>
+        </MatButton>
+        </div>
+    <br>
+    </MatThemeProvider>
+</html>
+    
+<style>
+
+.buttonContainer {
+    display: inline-block;
+    vertical-align: middle;
+    width: 10%;
+    text-align: center;
+    margin: 1%;
+}
+
+.upvoteBtn {
+    width: 33%;
+    float: left;
+    background-color: var(--myGreen) !important;
+    margin-top: 10%;
+}
+
+.downvoteBtn {
+    width: 33%;
+    float: right;
+    background-color: var(--myRed) !important;
+    margin-top: 10%;
+}
+
+.branchBtn {
+    width: 100%;
+    margin-top: 10%;
+}
+
+.reportBtn {
+    width: 50%;
+    margin-top: 10%;
+    background-color: #FFFF40 !important;
+}
+
+#addBranchBtn {
+    width: 50%;
+    background-color: var(--myGreen) !important;
+}
+
+.myBtn {
+    background-color: var(--myGreen) !important;
+    margin: auto 1%;
+}
+
+.mdc-slider__pin-value-marker {
+    color: var(--myBrown) !important;
+    font-weight: 1000 !important;
+}
+
+#myTitle {
+    /* color: @greenTheme.Secondary; !this also works, for reference */
+    color: var(--myGreen);
+    font-family: 'Comfortaa', cursive !important;
+}
+
+.mdc-floating-label {
+    font-family: 'Comfortaa', cursive !important;
+}
+</style>

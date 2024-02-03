@@ -1,0 +1,20 @@
+﻿<?xml version="1.0"?>
+<BrainStorm>
+  <Strings>
+        <searchToast>Please enter a term first</searchToast>
+        <welcome>Welcome to BrainStorm!</welcome>
+        <guide1>In the searchbox above, you can type any one-word term you can think of, and the app will return the suggestions that users like you think are most closely related to what you searched for. It's an easy way to quickly get new ideas or just freshen up your memory.</guide1>
+        <guide2>Everything is controlled by the users, so you have the power to add any suggestion you like, for any term, and rate anyone's suggestions.</guide2>
+        <guide3>By clicking on any suggestion in the chart, you will select it as your new search-term, and by clicking in the center, you will display the next X (controlled by the slider) suggestions. </guide3>
+        <guide4>Have fun!</guide4>
+        <newBranchSuccessTitle>New branch created.</newBranchSuccessTitle>
+        <newBranchSuccessMessage>Thank you!</newBranchSuccessMessage>
+        <newBranchErrorTitle>Invalid name.</newBranchErrorTitle>
+        <newBranchErrorMessage>Please try again.</newBranchErrorMessage>
+        <searchTextClass>mdc-text-field--focused</searchTextClass>
+        <branchHeader>id,name,score,upvotes,downvotes,reports</branchHeader>
+        <myGreen>#7FFF40</myGreen>
+        <myRed>#FF4040</myRed>
+        <myBrown>#362819</myBrown>
+  </Strings>
+</BrainStorm>

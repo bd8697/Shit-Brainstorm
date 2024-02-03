@@ -1,0 +1,71 @@
+﻿@page "/"
+@inject NavigationManager UriHelper
+@inject IMatToaster Toaster
+
+<div id="bodyWrapper">
+<h1 id = "myTitle">BrainStorm</h1> 
+ <div id ="searchBox">
+     <MatThemeProvider Theme="@greenTheme">
+        <MatTextField @bind-Value="@SearchedTerm" @onblur="@(() => ResetClassOnBlur())" InputClass="inputText" Class = "@SearchTextClass" Dense="true" Label="Search a term" Icon="" IconTrailing="true" Outlined="true" OnKeyUp="@KeyUp"></MatTextField>
+        <div style = "display: inline-block">
+        <MatButton Raised="true" Class="MatButtonGlobal searchBtn" Style = "margin: 10%;" OnClick="@(e => GoToChart())">
+            <i class="fa fa-search btnIco" aria-hidden="true"></i>
+        </MatButton>
+    </div>
+    </MatThemeProvider>
+</div>
+<br>
+<MatFAB class = "absolute" OnClick="@(e => ShowGuide())">
+    <i class="fa fa-question btnIco" aria-hidden="true"></i>
+</MatFAB>
+        <MatSnackbar @bind-IsOpen="@OpenGuide" Stacked="true" Timeout = "-1">
+            <MatSnackbarContent>@Utility.GetString("welcome")</MatSnackbarContent>
+            <MatSnackbarContent>@Utility.GetString("guide1") <br /> <br />@Utility.GetString("guide2") <br /> <br />@Utility.GetString("guide3") <br /> <br />@Utility.GetString("guide4")</MatSnackbarContent>
+            <MatSnackbarActions>
+                <MatButton Raised="true" Class="MatButtonGlobal searchBtn" OnClick="@(e => CloseGuide())">
+            <i class="fa fa-check btnIco" aria-hidden="true"></i>
+        </MatButton>
+            </MatSnackbarActions>
+        </MatSnackbar>
+
+</div>
+<style>
+#searchBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.absolute {
+    position: absolute !important;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--myGreen) !important;
+}
+
+.searchBtn {
+    width: 50%;
+    background-color: var(--myGreen) !important;
+    border-radius: 50%;
+}
+
+#bodyWrapper {
+    height: 100vh;
+    position: relative;
+}
+
+.sidebar {
+    background-image: linear-gradient(180deg, #52AF2A 0%, #791E1E 86%);
+}
+
+.mdc-floating-label {
+    font-family: 'Comfortaa', cursive !important;
+}
+
+#myTitle {
+    text-align: center; 
+    color: var(--myGreen) !important; 
+    font-size: 500%;
+    }
+</style>
